@@ -1,15 +1,13 @@
-from math import sqrt
+#cython: language_level=3
+
+cimport cython
+
+cdef extern from "math.h":
+    double sqrt(double x) nogil
+
 
 cdef class Planet(object):
-
-    cdef:
-        float x
-        float y 
-        float z
-        float vx
-        float vy
-        float vz
-        float m
+    cdef public double x,y,z,vx,vy,vz,m
 
     def __init__(self):
         self.x = 1.0
@@ -20,7 +18,10 @@ cdef class Planet(object):
         self.vz = 0.0
         self.m = 1.0
 
-def single_step(Planet planet, float dt):
+@cython.cdivision(True)
+
+cdef void single_step(Planet planet, float dt) nogil:
+    
     cdef float distance = sqrt(planet.x**2 + planet.y**2 + planet.z**2)
     cdef float Fx = -planet.x / (distance**3)
     cdef float Fy = -planet.y / (distance**3)
@@ -36,10 +37,11 @@ def single_step(Planet planet, float dt):
     planet.vz += (dt * Fz) / planet.m
 
 
-def c_step_time (planet,float time_span,int n_steps):
-    cdef double dt
+cdef step_time(Planet planet,float time_span,int n_steps):
+    cdef float dt
 
     dt = time_span / n_steps
     cdef int j
-    for j in range(n_steps):
-        single_step(planet, dt)
+    with nogil:
+        for j in range(n_steps):
+           single_step(planet, dt)

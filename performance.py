@@ -1,5 +1,4 @@
 #Fichero para la prueba y comparativa rendimiento
-#solo python con cython
 
 import time
 import py_orbit
@@ -10,16 +9,14 @@ planeta_py = py_orbit.Planet()
 
 
 init_time = time.time()
-print("python: ")
-py_orbit.step_time(planeta_py, 33.5,5)
+py_orbit.step_time(planeta_py, 20,20)
 fin_time = time.time()
 total_time_python = fin_time - init_time
 print("tiempo total python: ", total_time_python)
 
 
 init_time = time.time()
-print("cython: ")
-cy_orbit.c_step_time(planeta_cy, 33.5,5)
+cy_orbit.step_time(planeta_cy, 20,20)
 fin_time = time.time()
 total_time_cython = fin_time - init_time
 print("tiempo total cython: ", total_time_cython)
