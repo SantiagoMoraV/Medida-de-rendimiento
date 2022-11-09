@@ -1,5 +1,5 @@
 # Medida-de-rendimiento #
-Ficheros para la toma de rendimientos, que presente la ganancia Python/Cython.
+## Ficheros para la toma de rendimientos, que presente la ganancia Python/Cython.
 
 Se encuentran los archivos "py_orbit" donde se encuentra el código original codificado en lenguaje python, luego 
 el archivo "cy_orbit" que es el codigo original adaptado a lenguaje cython, los principales cambios es que se cambian la declaracion de variables.
